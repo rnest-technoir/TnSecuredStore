@@ -7,6 +7,7 @@ namespace DbApp.Db
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using TnSecuredStoreApi.Models;
+    using TnSecuredStoreApi.Lib;
 
     public partial class SecuredEntryContext : DbContext
     {
@@ -25,7 +26,7 @@ namespace DbApp.Db
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_configuration["EntryDbConnection:ConnectionString"]);
+            optionsBuilder.UseSqlServer(_configuration[TXT.AppSettings.EntryDbConnection]);
             
         }
     }

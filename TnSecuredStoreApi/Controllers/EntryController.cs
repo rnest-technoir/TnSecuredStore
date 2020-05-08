@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TnSecuredStoreApi.Db.Services;
+using TnSecuredStoreApi.Lib;
 using TnSecuredStoreApi.Models;
 
 namespace TnSecuredStoreApi.Controllers
@@ -38,6 +39,49 @@ namespace TnSecuredStoreApi.Controllers
             var entry = _mapper.Map<EntryModel, Entry>(model);
             model = _mapper.Map<Entry, EntryModel>(await _entryService.AddAsync(entry));
             return model;
+        }
+
+        [Route("api/addOrUpdateEntry")]
+        [HttpPut]
+        public async Task<IActionResult> AddOrUpdateEntryAsync([FromBody]EntryModel model)
+        {
+            var entry = await _entryService.GetByIdAsync(model.Id);
+            var entryToModel = _mapper.Map<EntryModel, Entry>(model);
+
+            if (null == entry)
+            {
+                var added = await _entryService.AddAsync(entryToModel);
+                if(null == added)
+                    return StatusCode(StatusCodes.Status500InternalServerError, TXT.Response.ResourceNotFound500);
+                return Ok(added);
+            }
+
+            int result = await _entryService.UpdateAsync(entryToModel);
+
+            if (result == 0)
+                return StatusCode(StatusCodes.Status400BadRequest, TXT.Response.ResourceFound400);
+
+            model = _mapper.Map<Entry, EntryModel>(entry);
+            return Ok(model);
+        }
+
+
+        [Route("api/deleteEntry")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteEntryAsync([FromBody]EntryModel model)
+        {
+            var entry = await _entryService.GetByIdAsync(model.Id);
+
+            if (null == entry)
+                return StatusCode(StatusCodes.Status404NotFound, TXT.Response.ResourceFound403);
+
+            var modelEntry = _mapper.Map<EntryModel, Entry>(model);
+            int result = await _entryService.DeleteAsync(modelEntry);
+
+            if (result == 0)
+                return StatusCode(StatusCodes.Status500InternalServerError, TXT.Response.InternalError);
+
+            return StatusCode(StatusCodes.Status204NoContent);
         }
     }
 }
