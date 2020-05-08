@@ -26,6 +26,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TnSecuredStoreUi", "TnSecur
 		SlnRelativePath = "TnSecuredStoreUi\"
 	EndProjectSection
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TnSecuredStoreDb", "TnSecuredStoreDb\TnSecuredStoreDb.sqlproj", "{BAC5D8B9-1135-4456-8B97-FF308B9B9FB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,12 @@ Global
 		{738826B6-9F4D-4CDC-BB39-2A75EFBD05A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{738826B6-9F4D-4CDC-BB39-2A75EFBD05A8}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{738826B6-9F4D-4CDC-BB39-2A75EFBD05A8}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{BAC5D8B9-1135-4456-8B97-FF308B9B9FB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAC5D8B9-1135-4456-8B97-FF308B9B9FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAC5D8B9-1135-4456-8B97-FF308B9B9FB3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{BAC5D8B9-1135-4456-8B97-FF308B9B9FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAC5D8B9-1135-4456-8B97-FF308B9B9FB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAC5D8B9-1135-4456-8B97-FF308B9B9FB3}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
