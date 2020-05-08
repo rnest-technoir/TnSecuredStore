@@ -25,6 +25,7 @@ namespace TnSecuredStoreApi.Controllers
         }
 
         [Route("api/entryList")]
+        [HttpGet]
         public async Task<IList<EntryModel>> GetEntryListAsync()
         {
             return _mapper.Map<IList<Entry>, IList<EntryModel>>((await _entryService.GetAllAsync()).ToList());
