@@ -20,6 +20,21 @@ export class ApiService {
     this._baseUrl = this._endpoints.BaseUrl;
   }
 
+  makeEncryptedRequest(securedData: string): void
+  {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'https://localhost:44341/weatherforecast'
+      })
+    };
+
+    this._httpClient.post(
+      `${this._endpoints.BaseUrl}${this._endpoints.CryptoEndpoint}`,
+      httpOptions
+    );
+  }
+
   getWeather(): Observable<Array<WeatherModel>> {
 
     const httpOptions = {

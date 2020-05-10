@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HttpClientJsonpModule  } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MaterialModule } from './material.module';
+import { MaterialModule } from '../modules/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CryptoRequestComponent } from './crypto-request/crypto-request.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CryptoRequestComponent
   ],
   imports: [
     BrowserModule,

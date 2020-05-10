@@ -10,7 +10,7 @@ namespace TnSecuredStoreApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [EnableCors("MyPolicy")]
+    [EnableCors("SecuredEntryPolicy")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

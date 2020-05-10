@@ -7,7 +7,7 @@ export class EndpointService {
 
   BaseUrl: string = 'https://localhost:44341';
   WeatherUrl: string = '/weatherforecast';
-
+  CryptoEndpoint: string = "/crypto"
   
 
 }
