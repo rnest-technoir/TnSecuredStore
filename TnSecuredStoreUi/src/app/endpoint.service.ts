@@ -6,8 +6,7 @@ import { Injectable } from '@angular/core';
 export class EndpointService {
 
   BaseUrl: string = 'https://localhost:44341';
-  WeatherUrl: string = '/weatherforecast';
   CryptoEndpoint: string = "/crypto"
-  
+  EntryList: string = '/api/entryList';
 
 }

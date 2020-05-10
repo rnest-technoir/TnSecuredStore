@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { EndpointService } from './endpoint.service';
 import { WeatherModel } from '../models/WeatherModel';
+import { EntryModel } from '../models/EntryModel';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class ApiService {
     );
   }
 
-  getWeather(): Observable<Array<WeatherModel>> {
+  getEntries(): Observable<Array<EntryModel>> {
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -44,8 +45,8 @@ export class ApiService {
       })
     };
 
-    return this._httpClient.get<WeatherModel[]>(
-      `${this._endpoints.BaseUrl}${this._endpoints.WeatherUrl}`,
+    return this._httpClient.get<EntryModel[]>(
+      `${this._endpoints.BaseUrl}${this._endpoints.EntryList}`,
       httpOptions
     );
   }

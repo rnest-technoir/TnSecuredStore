@@ -1,0 +1,28 @@
+
+  <div class="left-items-box">
+    <button mat-raised-button (click)="openDialog()">Add entry</button>
+  </div>
+
+<div class="items-box">
+
+  <mat-card class="item" *ngFor="let entry of EntryList">
+    <mat-card-content>
+      <h4>
+        Title: <strong>{{entry.title}}</strong>
+      </h4>
+      <p>
+        Email: <strong>{{entry.email}}</strong>
+      </p>
+      <p>
+        Url: <strong>{{entry.url}}</strong>
+      </p>
+      <p>
+        Date created: <strong>{{entry.createdOn | date:'MMMM d, y h:mm a':'+0200'}}</strong>
+      </p>
+      <p>
+        Date modified: <strong>{{entry.modifiedOn | date:'MMMM d, y h:mm a':'+0200'}}</strong>
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+</div>
