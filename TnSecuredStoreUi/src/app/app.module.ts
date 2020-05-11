@@ -12,17 +12,21 @@ import { MaterialModule } from '../modules/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CryptoRequestComponent } from './crypto-request/crypto-request.component';
 import { EntryComponent } from './entry/entry.component';
-import { EntryDialogComponent } from './entry-dialog/entry-dialog.component';
+import { AddEntryDialogComponent } from './entry-dialog/entry-dialog.component';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { UpdateEntryDialogComponent } from './update-entry-dialog/update-entry-dialog.component';
+import { DeleteEntryDialogComponent } from './delete-entry-dialog/delete-entry-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CryptoRequestComponent,
     EntryComponent,
-    EntryDialogComponent
+    AddEntryDialogComponent,
+    UpdateEntryDialogComponent,
+    DeleteEntryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +47,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [EntryDialogComponent]
+  entryComponents: [AddEntryDialogComponent]
 })
 export class AppModule { }

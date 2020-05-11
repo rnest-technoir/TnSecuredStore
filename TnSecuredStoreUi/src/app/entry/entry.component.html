@@ -1,6 +1,6 @@
 
   <div class="left-items-box">
-    <button mat-raised-button (click)="openDialog()">Add entry</button>
+    <button mat-raised-button (click)="addDialog()">Add entry</button>
   </div>
 
 <div class="items-box">
@@ -22,6 +22,10 @@
       <p>
         Date modified: <strong>{{entry.modifiedOn | date:'MMMM d, y h:mm a':'+0200'}}</strong>
       </p>
+      <div class="dialog-action-box">
+        <button mat-raised-button (click)="updateDialog(entry)">Edit entry</button>
+        <button mat-raised-button (click)="deleteDialog()">Delete entry</button>
+      </div>
     </mat-card-content>
   </mat-card>
 

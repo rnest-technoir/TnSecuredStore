@@ -29,7 +29,7 @@ namespace TnSecuredStoreApi.Controllers
         [HttpGet]
         public async Task<IList<EntryModel>> GetEntryListAsync()
         {
-            return _mapper.Map<IList<Entry>, IList<EntryModel>>((await _entryService.GetAllAsync()).ToList());
+            return _mapper.Map<IList<Entry>, IList<EntryModel>>((await _entryService.GetAllAsync()).OrderByDescending(e => e.CreatedOn).ToList());
         }
 
         [Route("api/addEntry")]

@@ -1,6 +1,6 @@
 
 <h2 mat-dialog-title>
-  Add new entry
+  Delete entry
 </h2>
 
 <mat-dialog-content [formGroup]="form">
@@ -14,27 +14,17 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Password" formControlName="password">
+    <input matInput placeholder="Url" formControlName="url">
   </mat-form-field>
-
 
   <mat-form-field>
     <input matInput placeholder="Login" formControlName="login">
   </mat-form-field>
 
 
-  <mat-form-field>
-    <input matInput placeholder="Email" formControlName="email">
-  </mat-form-field>
-
-  <mat-form-field>
-    <input matInput placeholder="Url" formControlName="url">
-  </mat-form-field>
-
-
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button class="mat-raised-button" (click)="close()">Close</button>
-  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+  <!--<button class="mat-raised-button" (click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>-->
 </mat-dialog-actions>
