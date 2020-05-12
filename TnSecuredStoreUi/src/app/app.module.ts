@@ -12,12 +12,12 @@ import { MaterialModule } from '../modules/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CryptoRequestComponent } from './crypto-request/crypto-request.component';
 import { EntryComponent } from './entry/entry.component';
-import { AddEntryDialogComponent } from './entry-dialog/entry-dialog.component';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { UpdateEntryDialogComponent } from './update-entry-dialog/update-entry-dialog.component';
 import { DeleteEntryDialogComponent } from './delete-entry-dialog/delete-entry-dialog.component';
+import { AddEntryDialogComponent } from './add-entry-dialog/add-entry-dialog.component';
 
 @NgModule({
   declarations: [

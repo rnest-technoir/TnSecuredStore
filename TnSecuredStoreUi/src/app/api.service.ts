@@ -67,4 +67,20 @@ export class ApiService {
     );
   }
 
+  updateEntry(entry: EntryModel): Observable<EntryModel> {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'https://localhost:44341/weatherforecast'
+      })
+    };
+
+    return this._httpClient.put<EntryModel>(
+      `${this._endpoints.BaseUrl}${this._endpoints.AddOrUpdateEntry}`,
+      entry,
+      httpOptions
+    );
+  }
+
 }

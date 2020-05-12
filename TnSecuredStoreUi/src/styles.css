@@ -40,7 +40,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .item {
   width: 20%;
   margin: 5px;
-  height: 180px;
+  min-height: 200px;
 }
 
 .main-title {

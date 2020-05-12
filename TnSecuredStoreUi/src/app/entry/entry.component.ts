@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { EntryModel } from '../../models/EntryModel';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AddEntryDialogComponent } from '../entry-dialog/entry-dialog.component';
 import { DeleteEntryDialogComponent } from '../delete-entry-dialog/delete-entry-dialog.component';
 import { UpdateEntryDialogComponent } from '../update-entry-dialog/update-entry-dialog.component';
+import { AddEntryDialogComponent } from '../add-entry-dialog/add-entry-dialog.component';
+import { EntryService } from '../entry.service';
 
 @Component({
   selector: 'app-entry',
@@ -16,7 +17,7 @@ export class EntryComponent implements OnInit {
   Error: string;
   EntryList: EntryModel[];
 
-  constructor(private _apiService: ApiService, private _dialog: MatDialog) { }
+  constructor(private _apiService: ApiService, private _dialog: MatDialog, private _entryService: EntryService) { }
 
   ngOnInit(): void {
     this._apiService.getEntries().subscribe({
@@ -32,9 +33,6 @@ export class EntryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      //let newEntry = new EntryModel()
-      console.log('ADD RESULT:');
-      console.log(result);
 
       if (result instanceof EntryModel) {
         this.EntryList.unshift(result);
@@ -46,33 +44,47 @@ export class EntryComponent implements OnInit {
     });
   }
 
-  updateDialog(entry: EntryModel): void {
+  updateDialog(formEntry: EntryModel): void {
+    let entry: EntryModel = this._entryService.GetEntryById(formEntry.id, this.EntryList);
+
     const dialogRef = this._dialog.open(UpdateEntryDialogComponent, {
       width: '350px',
       data: {
-        title: entry.title,
-        url: entry.url,
-        password: entry.password,
-        login: entry.login,
+        title: formEntry.title,
+        url: formEntry.url,
+        password: formEntry.password,
+        login: formEntry.login,
+        email: formEntry.email,
+        id: formEntry.id,
+        authorId: entry.authorId,
+        createdOn: entry.createdOn,
+        modifiedOn: entry.modifiedOn,
+        rowGuid: entry.rowGuid,
+        isRemoved: entry.isRemoved,
+        isActive: entry.isActive,
         list: this.EntryList
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('UPDATE RESULT:');
-      console.log(result);
+      if (result === null || result === undefined)
+        return;
+
+      let entry: EntryModel = this._entryService.GetEntryById(formEntry.id, this.EntryList)
+      this._entryService.UpdateEntryByFormData(result, entry);
     });
   }
 
   deleteDialog(): void {
     const dialogRef = this._dialog.open(DeleteEntryDialogComponent, {
       width: '350px',
-      data: { id: 111 }
+      data: { }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('DELETE RESULT:');
-      console.log(result);
+
+      let entry: EntryModel = this.EntryList.filter(en => en.id === result.id)[0];
+
     });
   }
 

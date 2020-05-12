@@ -9,4 +9,5 @@ export class EndpointService {
   CryptoEndpoint: string = "/crypto"
   EntryList: string = '/api/entryList';
   AddEntry: string = '/api/addEntry';
+  AddOrUpdateEntry: string = '/api/addOrUpdateEntry';
 }

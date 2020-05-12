@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddEntryDialogComponent } from './entry-dialog.component';
+import { AddEntryDialogComponent } from './add-entry-dialog.component';
 
 describe('EntryDialogComponent', () => {
   let component: AddEntryDialogComponent;
