@@ -12,27 +12,27 @@ export class CryptoService {
   //constructor(private _key: string, private _iv: string) { }
   constructor() { }
 
-  encrypt(plainText: string): string {
+  encrypt(plainText: string): CryptoJS.WordArray {
 
     let encrypted: CryptoJS.WordArray = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(plainText), this._key,
-      {
-        keySize: 128 / 8,
-        iv: this._iv,
-        mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.Pkcs7
-      });
-    return encrypted.ciphertext;
+    {
+      keySize: 128 / 8,
+      iv: this._iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
+    return encrypted;
   }
 
-  decrypt(encrypted: string): string {
+  decrypt(encrypted: CryptoJS.WordArray): string {
 
     let decrypted: CryptoJS.DecryptedMessage = CryptoJS.AES.decrypt(encrypted, this._key,
-      {
-        keySize: 128 / 8,
-        iv: this._iv,
-        mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.Pkcs7
-      });
+    {
+      keySize: 128 / 8,
+      iv: this._iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
 

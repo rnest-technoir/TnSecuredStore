@@ -26,7 +26,7 @@ export class ApiService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'https://localhost:44341/weatherforecast'
+        'Access-Control-Allow-Origin': 'https://localhost:44341'
       })
     };
 
@@ -41,7 +41,7 @@ export class ApiService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'https://localhost:44341/weatherforecast'
+        'Access-Control-Allow-Origin': 'https://localhost:44341'
       })
     };
 

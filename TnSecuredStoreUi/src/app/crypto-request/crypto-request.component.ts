@@ -16,7 +16,9 @@ export class CryptoRequestComponent implements OnInit {
   }
 
   startRequest(): void {
-    let encrypted = "T2kMmYh9I0TmvlI4Z12UoQ==";
+    let plainText: string = "Marlon Brando";
+    let encrypted = this._cryptoService.encrypt(plainText);
+    console.log(`Encrypted: ${encrypted}`);
     let decrypted = this._cryptoService.decrypt(encrypted);
     console.log(`Decrypted: ${decrypted}`);
   }
