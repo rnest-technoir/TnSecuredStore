@@ -67,7 +67,7 @@ namespace TnSecuredStoreApi.Controllers
 
 
         [Route("api/deleteEntry")]
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> DeleteEntryAsync([FromBody]EntryModel model)
         {
             var entry = await _entryService.GetByIdAsync(model.Id);

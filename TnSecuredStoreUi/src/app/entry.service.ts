@@ -8,6 +8,8 @@ export class EntryService {
 
   constructor() { }
 
+  private enu
+
   public CombineEntry(form: any, data: any, actionType: string = "UPDATE"): EntryModel {
 
     let entry = new EntryModel();

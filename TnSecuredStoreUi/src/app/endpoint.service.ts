@@ -10,4 +10,5 @@ export class EndpointService {
   EntryList: string = '/api/entryList';
   AddEntry: string = '/api/addEntry';
   AddOrUpdateEntry: string = '/api/addOrUpdateEntry';
+  DeleteEntry: string = '/api/deleteEntry';
 }

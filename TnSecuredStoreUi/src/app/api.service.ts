@@ -56,7 +56,7 @@ export class ApiService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'https://localhost:44341/weatherforecast'
+        'Access-Control-Allow-Origin': 'https://localhost:44341'
       })
     };
 
@@ -72,12 +72,28 @@ export class ApiService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'https://localhost:44341/weatherforecast'
+        'Access-Control-Allow-Origin': 'https://localhost:44341'
       })
     };
 
     return this._httpClient.put<EntryModel>(
       `${this._endpoints.BaseUrl}${this._endpoints.AddOrUpdateEntry}`,
+      entry,
+      httpOptions
+    );
+  }
+
+  deleteEntry(entry: EntryModel): Observable<EntryModel> {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'https://localhost:44341'
+      })
+    };
+
+    return this._httpClient.post<EntryModel>(
+      `${this._endpoints.BaseUrl}${this._endpoints.DeleteEntry}`,
       entry,
       httpOptions
     );

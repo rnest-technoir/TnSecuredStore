@@ -75,15 +75,30 @@ export class EntryComponent implements OnInit {
     });
   }
 
-  deleteDialog(): void {
+  deleteDialog(formEntry: EntryModel): void {
     const dialogRef = this._dialog.open(DeleteEntryDialogComponent, {
       width: '350px',
-      data: { }
+      data: { entry: formEntry }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log('DELETE RESULT');
+      console.log(result);
 
-      let entry: EntryModel = this.EntryList.filter(en => en.id === result.id)[0];
+      if (result === null || result === undefined)
+        return;
+
+      if (result === "204") {
+        let entry: EntryModel = this.EntryList.filter(en => en.id === formEntry.id)[0];
+        //let list = this.EntryList.filter(e => e.id !== entry.id);
+        //this.EntryList = list;
+
+        const index = this.EntryList.indexOf(entry, 0);
+        if (index > -1) {
+          this.EntryList.splice(index, 1);
+        }
+      }
+     
 
     });
   }

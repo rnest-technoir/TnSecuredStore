@@ -24,7 +24,7 @@ namespace TnSecuredStoreApi.Services
 
         public virtual IQueryable<TEntity> DefaultListFilter(IQueryable<TEntity> inputList)
         {
-            return inputList;
+            return inputList.Where(e => e.IsActive);
         }
 
         protected abstract int GetAuthorId();
@@ -40,7 +40,7 @@ namespace TnSecuredStoreApi.Services
         {
             return await Task.Factory.StartNew(() =>
             {
-                return DefaultListFilter(_context.Set<TEntity>().Where(e => e.IsActive));
+                return DefaultListFilter(_context.Set<TEntity>());
             });
         }
 

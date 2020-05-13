@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { EntryService } from '../entry.service';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'delete-entry-dialog',
@@ -17,6 +19,8 @@ export class DeleteEntryDialogComponent implements OnInit {
   id: number;
 
   constructor(
+    private _entryService: EntryService,
+    private _httpClient: ApiService,
     private _formBuilder: FormBuilder,
     private _dialogRef: MatDialogRef<DeleteEntryDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public _dialogConfig: any
@@ -36,11 +40,18 @@ export class DeleteEntryDialogComponent implements OnInit {
     });
   }
 
-  save() {
-    this.form.value.id = this._dialogConfig.id;
+  delete() {
+    
     console.log('DELETE');
-    console.log(this.form.value);
-    this._dialogRef.close(this.form.value);
+    console.log(this._dialogConfig.entry);
+
+    this._httpClient.deleteEntry(this._dialogConfig.entry).subscribe({
+      next: data => {
+        this._dialogRef.close("204")
+      },
+      error: error => this._dialogRef.close(error)
+    });
+
   }
 
   close() {
