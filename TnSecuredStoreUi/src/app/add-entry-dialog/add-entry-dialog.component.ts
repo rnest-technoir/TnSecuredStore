@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../api.service';
 import { EntryModel } from '../../models/EntryModel';
 import { EntryService } from '../entry.service';
+import { CryptoService } from '../crypto.service';
 
 @Component({
   selector: 'app-add-entry-dialog',
@@ -22,6 +23,7 @@ export class AddEntryDialogComponent implements OnInit {
   id: number;
 
   constructor(
+    private _cryptoService: CryptoService,
     private _entryService: EntryService,
     private _httpClient: ApiService,
     private _formBuilder: FormBuilder,
@@ -43,9 +45,14 @@ export class AddEntryDialogComponent implements OnInit {
 
   save() {
 
-    this._httpClient.addEntry(this._entryService.CombineEntry(this.form, this._dialogConfig, "ADD")).subscribe({
+    let entry = this._entryService.CombineEntry(this.form, this._dialogConfig, "ADD");
+    let encryptedEntry = this._cryptoService.EncryptEntry(entry);
+
+    this._httpClient.addEntry(encryptedEntry).subscribe({
       next: data => {
-          this._dialogRef.close(this._entryService.GetResponseEntry(data))
+        let responseEntry = this._entryService.GetResponseEntry(data);
+        let decryptedEntry = this._cryptoService.DecryptEntry(responseEntry);
+        this._dialogRef.close(decryptedEntry)
       },
       error: error => this._dialogRef.close(error)
     });

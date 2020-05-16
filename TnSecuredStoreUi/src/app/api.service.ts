@@ -77,7 +77,7 @@ export class ApiService {
     };
 
     return this._httpClient.put<EntryModel>(
-      `${this._endpoints.BaseUrl}${this._endpoints.AddOrUpdateEntry}`,
+      `${this._endpoints.BaseUrl}${this._endpoints.UpdateEntry}`,
       entry,
       httpOptions
     );

@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EntryService } from '../entry.service';
 import { ApiService } from '../api.service';
+import { CryptoService } from '../crypto.service';
 
 @Component({
   selector: 'delete-entry-dialog',
@@ -19,6 +20,7 @@ export class DeleteEntryDialogComponent implements OnInit {
   id: number;
 
   constructor(
+    private _cryptoService: CryptoService,
     private _entryService: EntryService,
     private _httpClient: ApiService,
     private _formBuilder: FormBuilder,
@@ -42,10 +44,12 @@ export class DeleteEntryDialogComponent implements OnInit {
 
   delete() {
     
-    console.log('DELETE');
-    console.log(this._dialogConfig.entry);
+    //console.log('DELETE');
+    //console.log(this._dialogConfig.entry);
 
-    this._httpClient.deleteEntry(this._dialogConfig.entry).subscribe({
+    let encryptedEntry = this._cryptoService.EncryptEntry(this._dialogConfig.entry);
+
+    this._httpClient.deleteEntry(encryptedEntry).subscribe({
       next: data => {
         this._dialogRef.close("204")
       },

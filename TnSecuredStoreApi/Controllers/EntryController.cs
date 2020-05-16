@@ -65,6 +65,22 @@ namespace TnSecuredStoreApi.Controllers
             return Ok(model);
         }
 
+        [Route("api/UpdateEntry")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateEntryAsync([FromBody]EntryModel model)
+        {
+            var entryToModel = _mapper.Map<EntryModel, Entry>(model);
+
+            int result = await _entryService.UpdateAsync(entryToModel);
+
+            if (result == 0)
+                return StatusCode(StatusCodes.Status400BadRequest, TXT.Response.ResourceFound400);
+
+            var entry = await _entryService.GetByIdAsync(model.Id);
+            model = _mapper.Map<Entry, EntryModel>(entry);
+            return Ok(model);
+        }
+
 
         [Route("api/deleteEntry")]
         [HttpPost]

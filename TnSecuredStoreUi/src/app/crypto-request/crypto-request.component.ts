@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import * as CryptoJS from 'crypto-js';
 import { CryptoService } from '../crypto.service';
-import { type } from 'os';
 
 type stringOrNumber = string | number;
 
@@ -56,11 +55,14 @@ export class CryptoRequestComponent implements OnInit {
   }
 
   startRequest(): void {
-    let plainText: string = "Zupa grzybówka";
-    let encrypted = this._cryptoService.encrypt(plainText);
+    let plainText: string = "Piotr Ernest Klimaszewski lorem ipsum dolor ... $#%";
+    let encrypted = this._cryptoService.Encrypt(plainText);
     console.log(`Encrypted: ${encrypted}`);
-    let decrypted = this._cryptoService.decrypt(encrypted);
+
+    let decrypted = this._cryptoService.Decrypt(encrypted);
     console.log(`Decrypted: ${decrypted}`);
+
+   
   }
 
 }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { EntryModel } from '../../models/EntryModel';
 import { ApiService } from '../api.service';
 import { EntryService } from '../entry.service';
+import { CryptoService } from '../crypto.service';
 
 @Component({
   selector: 'update-entry-dialog',
@@ -28,6 +29,7 @@ export class UpdateEntryDialogComponent implements OnInit {
   isActive: boolean;
 
   constructor(
+    private _cryptoService: CryptoService,
     private _entryService: EntryService,
     private _httpClient: ApiService,
     private _formBuilder: FormBuilder,
@@ -63,9 +65,14 @@ export class UpdateEntryDialogComponent implements OnInit {
 
   update() {
 
-    this._httpClient.updateEntry(this._entryService.CombineEntry(this.form, this._dialogConfig)).subscribe({
+    let entry = this._entryService.CombineEntry(this.form, this._dialogConfig);
+    let encryptedEntry = this._cryptoService.EncryptEntry(entry);
+
+    this._httpClient.updateEntry(encryptedEntry).subscribe({
       next: data => {
-        this._dialogRef.close(this._entryService.GetResponseEntry(data))
+        let responseEntry = this._entryService.GetResponseEntry(data);
+        let decryptedEntry = this._cryptoService.DecryptEntry(responseEntry);
+        this._dialogRef.close(decryptedEntry)
       },
       error: error => this._dialogRef.close(error)
     });

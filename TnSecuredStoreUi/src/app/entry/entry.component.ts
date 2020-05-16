@@ -6,6 +6,7 @@ import { DeleteEntryDialogComponent } from '../delete-entry-dialog/delete-entry-
 import { UpdateEntryDialogComponent } from '../update-entry-dialog/update-entry-dialog.component';
 import { AddEntryDialogComponent } from '../add-entry-dialog/add-entry-dialog.component';
 import { EntryService } from '../entry.service';
+import { CryptoService } from '../crypto.service';
 
 @Component({
   selector: 'app-entry',
@@ -17,11 +18,13 @@ export class EntryComponent implements OnInit {
   Error: string;
   EntryList: EntryModel[];
 
-  constructor(private _apiService: ApiService, private _dialog: MatDialog, private _entryService: EntryService) { }
+  constructor(private _cryptoService: CryptoService, private _apiService: ApiService, private _dialog: MatDialog, private _entryService: EntryService) { }
 
   ngOnInit(): void {
     this._apiService.getEntries().subscribe({
-      next: (elem) => this.EntryList = elem,
+      next: (list) => {
+        this.EntryList = this._cryptoService.DecryptEntryList(list);
+      },
       error: (err) => { this.Error = err, console.log(err) }
     });
   }
