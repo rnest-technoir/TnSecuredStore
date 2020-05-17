@@ -1,13 +1,23 @@
 
 <h2 mat-dialog-title>
+  <mat-icon color="warn" style="font-size:20px">
+    report_problem
+  </mat-icon>
   Delete entry
 </h2>
 
 <h2>
-  Czy na pewno usunąć wpis <span>{{_dialogConfig.entry.title}}</span>
+  Are you sure you want to delete the entry <span>{{_dialogConfig.entry.title}}</span>?
 </h2>
 
 <mat-dialog-actions>
-  <button class="mat-raised-button" (click)="close()">NIE</button>
-  <button class="mat-raised-button mat-primary" (click)="delete()">USUŃ</button>
+  <button  mat-stroked-button color="primary" (click)="close()">
+    <mat-icon>
+      keyboard_return
+    </mat-icon>
+  </button>
+  &nbsp;
+  <button mat-stroked-button color="warn" (click)="delete()">
+    <mat-icon>delete</mat-icon>
+  </button>
 </mat-dialog-actions>

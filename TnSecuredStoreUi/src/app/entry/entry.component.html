@@ -1,6 +1,8 @@
 
 <div class="left-items-box">
-  <button mat-raised-button (click)="addDialog()">Add entry</button>
+  <button mat-raised-button color="primary" (click)="addDialog()">
+    <mat-icon>control_point</mat-icon>
+  </button>
 </div>
 
 <div class="items-box">
@@ -12,17 +14,18 @@
         <span class="id-box">({{entry.id}})</span>
       </h4>
       <p>
-        Email: <strong>{{entry.email}}</strong>
-      </p>
-      <p>
-        Url: <strong>{{entry.url}}</strong>
-      </p>
-      <p>
         Password: <strong>{{entry.password}}</strong>
       </p>
       <p>
         Login: <strong>{{entry.login}}</strong>
       </p>
+      <p>
+        Email: <strong>{{entry.email}}</strong>
+      </p>
+      <p>
+        Url: <strong>{{entry.url}}</strong>
+      </p>
+
       <p>
       <p>
         Date created: <strong>{{entry.createdOn | date:'MMMM d, y h:mm a':'+0200'}}</strong>
@@ -31,8 +34,13 @@
         Date modified: <strong>{{entry.modifiedOn | date:'MMMM d, y h:mm a':'+0200'}}</strong>
       </p>
       <div class="dialog-action-box">
-        <button mat-raised-button (click)="updateDialog(entry)">Edit entry</button>
-        <button mat-raised-button (click)="deleteDialog(entry)">Delete entry</button>
+        <button mat-stroked-button color="primary" (click)="updateDialog(entry)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        &nbsp;
+        <button mat-stroked-button color="warn" (click)="deleteDialog(entry)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
     </mat-card-content>
   </mat-card>

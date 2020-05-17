@@ -59,7 +59,7 @@ export class EntryComponent implements OnInit {
 
   public addDialog(): void {
     const dialogRef = this._dialog.open(AddEntryDialogComponent, {
-      width: '350px',
+      width: '420px',
       data: { }
     });
 
@@ -80,7 +80,7 @@ export class EntryComponent implements OnInit {
     let entry: EntryModel = this._entryService.GetEntryById(formEntry.id, this.EntryList);
 
     const dialogRef = this._dialog.open(UpdateEntryDialogComponent, {
-      width: '350px',
+      width: '420px',
       data: {
         title: formEntry.title,
         url: formEntry.url,
@@ -114,8 +114,6 @@ export class EntryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('DELETE RESULT');
-      console.log(result);
 
       if (result === null || result === undefined)
         return;
