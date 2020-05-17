@@ -41,14 +41,14 @@ export class EntryComponent implements OnInit {
     });
   }
 
-  public handlePageEvent(event?: PageEvent) {
+  public handlePageEvent(event?: PageEvent): PageEvent {
 
     if (event) {
       console.log(event);
       this.SetPager(event);
     }
-   
-   
+
+    return event;
   }
 
   public setPageSizeOptions(setPageSizeOptionsInput: string) {
@@ -141,6 +141,8 @@ export class EntryComponent implements OnInit {
   private InitPager(): void {
     this.length = this.EntryList.length;
     this.PagedEntryList = this.EntryList.slice(0, this.pageSize);
+    this.pageEvent.pageIndex = 0;
+    this.pageEvent.previousPageIndex = 0;
   }
 
 }
