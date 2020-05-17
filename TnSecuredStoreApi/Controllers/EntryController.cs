@@ -18,10 +18,12 @@ namespace TnSecuredStoreApi.Controllers
     public class EntryController : ControllerBase
     {
         private readonly EntryService _entryService;
+        private readonly EntryValidatorFactory _validatorFactory;
         private readonly IMapper _mapper;
-        public EntryController(EntryService entryService, IMapper mapper)
+        public EntryController(EntryService entryService, EntryValidatorFactory validatorFactory, IMapper mapper)
         {
             _entryService = entryService;
+            _validatorFactory = validatorFactory;
             _mapper = mapper;
         }
 
@@ -34,11 +36,16 @@ namespace TnSecuredStoreApi.Controllers
 
         [Route("api/addEntry")]
         [HttpPost]
-        public async Task<EntryModel> AddEntryAsync([FromBody]EntryModel model)
+        public async Task<IActionResult> AddEntryAsync([FromBody]EntryModel model)
         {
+            var validator = _validatorFactory.Create(typeof(AddEntryValidator));
+            var validation = await validator.ValidateAsync(model);
+            if(!validation.IsValid)
+                return StatusCode(StatusCodes.Status400BadRequest, validation.Errors.FirstOrDefault().ErrorMessage);
+
             var entry = _mapper.Map<EntryModel, Entry>(model);
             model = _mapper.Map<Entry, EntryModel>(await _entryService.AddAsync(entry));
-            return model;
+            return Ok(model);
         }
 
         [Route("api/addOrUpdateEntry")]
@@ -69,6 +76,12 @@ namespace TnSecuredStoreApi.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateEntryAsync([FromBody]EntryModel model)
         {
+            var validator = _validatorFactory.Create(typeof(EntryValidator));
+            var validation = await validator.ValidateAsync(model);
+            if (!validation.IsValid)
+                return StatusCode(StatusCodes.Status400BadRequest, validation.Errors.FirstOrDefault().ErrorMessage);
+
+
             var entryToModel = _mapper.Map<EntryModel, Entry>(model);
 
             int result = await _entryService.UpdateAsync(entryToModel);
@@ -86,6 +99,12 @@ namespace TnSecuredStoreApi.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteEntryAsync([FromBody]EntryModel model)
         {
+
+            var validator = _validatorFactory.Create(typeof(EntryValidator));
+            var validation = await validator.ValidateAsync(model);
+            if (!validation.IsValid)
+                return StatusCode(StatusCodes.Status400BadRequest, validation.Errors.FirstOrDefault().ErrorMessage);
+
             var entry = await _entryService.GetByIdAsync(model.Id);
 
             if (null == entry)

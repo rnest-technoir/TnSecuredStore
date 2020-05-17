@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using TnSecuredStoreApi.Db.Services;
+using TnSecuredStoreApi.Lib;
 using TnSecuredStoreApi.Profiles;
 
 namespace TnSecuredStoreApi
@@ -50,6 +51,7 @@ namespace TnSecuredStoreApi
             ConfigureMapper(services);
 
             services.AddScoped<DbContext, SecuredEntryContext>();
+            services.AddScoped<EntryValidatorFactory>();
             services.AddScoped<EntryService>();
         }
 
