@@ -7,6 +7,7 @@ import { UpdateEntryDialogComponent } from '../update-entry-dialog/update-entry-
 import { AddEntryDialogComponent } from '../add-entry-dialog/add-entry-dialog.component';
 import { EntryService } from '../entry.service';
 import { CryptoService } from '../crypto.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-entry',
@@ -15,21 +16,48 @@ import { CryptoService } from '../crypto.service';
 })
 export class EntryComponent implements OnInit {
 
-  Error: string;
-  EntryList: EntryModel[];
+  public length: number = 100;
+  public pageSize: number = 10;
+  public pageSizeOptions: number[] = [5, 10, 25, 100];
+
+  public pageEvent: PageEvent;
+
+  public Error: string;
+  public EntryList: EntryModel[];
+  public PagedEntryList: EntryModel[];
 
   constructor(private _cryptoService: CryptoService, private _apiService: ApiService, private _dialog: MatDialog, private _entryService: EntryService) { }
 
   ngOnInit(): void {
+
     this._apiService.getEntries().subscribe({
       next: (list) => {
+        
         this.EntryList = this._cryptoService.DecryptEntryList(list);
+        this.length = this.EntryList.length;
+        this.PagedEntryList = this.EntryList.slice(0, this.pageSize);
       },
       error: (err) => { this.Error = err, console.log(err) }
     });
   }
 
-  addDialog(): void {
+  public handlePageEvent(event?: PageEvent) {
+
+    if (event) {
+      console.log(event);
+      this.SetPager(event);
+    }
+   
+   
+  }
+
+  public setPageSizeOptions(setPageSizeOptionsInput: string) {
+    if (setPageSizeOptionsInput) {
+      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+    }
+  }
+
+  public addDialog(): void {
     const dialogRef = this._dialog.open(AddEntryDialogComponent, {
       width: '350px',
       data: { }
@@ -39,15 +67,16 @@ export class EntryComponent implements OnInit {
 
       if (result instanceof EntryModel) {
         this.EntryList.unshift(result);
+        this.InitPager();
       }
       else {
-        console.log(result);
+        //console.log(result);
       }
       
     });
   }
 
-  updateDialog(formEntry: EntryModel): void {
+  public updateDialog(formEntry: EntryModel): void {
     let entry: EntryModel = this._entryService.GetEntryById(formEntry.id, this.EntryList);
 
     const dialogRef = this._dialog.open(UpdateEntryDialogComponent, {
@@ -78,7 +107,7 @@ export class EntryComponent implements OnInit {
     });
   }
 
-  deleteDialog(formEntry: EntryModel): void {
+  public deleteDialog(formEntry: EntryModel): void {
     const dialogRef = this._dialog.open(DeleteEntryDialogComponent, {
       width: '350px',
       data: { entry: formEntry }
@@ -93,17 +122,27 @@ export class EntryComponent implements OnInit {
 
       if (result === "204") {
         let entry: EntryModel = this.EntryList.filter(en => en.id === formEntry.id)[0];
-        //let list = this.EntryList.filter(e => e.id !== entry.id);
-        //this.EntryList = list;
 
         const index = this.EntryList.indexOf(entry, 0);
         if (index > -1) {
           this.EntryList.splice(index, 1);
+          this.InitPager();
         }
       }
      
 
     });
+  }
+
+  private SetPager(event: PageEvent): void {
+    this.length = this.EntryList.length;
+    let offset: number = event.pageIndex * event.pageSize;
+    this.PagedEntryList = this.EntryList.slice(offset, event.pageSize + offset);
+  }
+
+  private InitPager(): void {
+    this.length = this.EntryList.length;
+    this.PagedEntryList = this.EntryList.slice(0, this.pageSize);
   }
 
 }

@@ -65,3 +65,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   min-height: 100px;
   background-color:#f5f5f5;
 }
+.id-box {
+  font-size:14px;
+  color:rgba(255, 0, 0, 0.54);
+  margin-left:4px;
+}

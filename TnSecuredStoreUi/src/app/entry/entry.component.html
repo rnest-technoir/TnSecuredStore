@@ -1,14 +1,15 @@
 
-  <div class="left-items-box">
-    <button mat-raised-button (click)="addDialog()">Add entry</button>
-  </div>
+<div class="left-items-box">
+  <button mat-raised-button (click)="addDialog()">Add entry</button>
+</div>
 
 <div class="items-box">
 
-  <mat-card class="item" *ngFor="let entry of EntryList">
+  <mat-card class="item" *ngFor="let entry of PagedEntryList">
     <mat-card-content>
       <h4>
         Title: <strong>{{entry.title}}</strong>
+        <span class="id-box">({{entry.id}})</span>
       </h4>
       <p>
         Email: <strong>{{entry.email}}</strong>
@@ -36,4 +37,12 @@
     </mat-card-content>
   </mat-card>
 
+
+
 </div>
+
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageEvent = handlePageEvent($event)">
+</mat-paginator>
