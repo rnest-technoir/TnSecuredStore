@@ -16,7 +16,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   min-width: 300px;
   padding: 1em;
 }
-
+.main-content{
+    min-height:100%;
+}
 .items-box {
   display: flex;
   flex-wrap: wrap;
@@ -58,3 +60,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 0;
 }
 
+.bottom-title {
+  margin-top: 0.5em;
+  min-height: 100px;
+  background-color:#f5f5f5;
+}

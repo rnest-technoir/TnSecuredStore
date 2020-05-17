@@ -1,43 +1,58 @@
 
 
 
-<mat-sidenav-container id="main-container" *ngIf="shouldRun">
-  <mat-sidenav #sidenav mode="side" [(opened)]="opened" id="main-sidenav">
-    <h4>
-      Side content
-    </h4>
-    <div>
-      <app-crypto-request></app-crypto-request>
-    </div>
-  </mat-sidenav>
+  <mat-sidenav-container id="main-container" *ngIf="shouldRun">
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" id="main-sidenav">
+      <h4>
+        Side content
+      </h4>
+      <div>
+        <app-crypto-request></app-crypto-request>
+      </div>
+    </mat-sidenav>
 
 
-  <mat-sidenav-content>
+    <mat-sidenav-content>
 
-    <div class="main-content">
+      <div class="main-content">
 
-      <div class="main-title">
+        <div class="main-title">
 
-        <mat-toolbar class="title-toolbar" >
-          <mat-toolbar-row>
-            <h4>{{Title}}</h4>
-          </mat-toolbar-row>
+          <mat-toolbar class="title-toolbar">
+            <mat-toolbar-row>
+              <h4>{{Title}}</h4>
+            </mat-toolbar-row>
 
-          <mat-toolbar-row>
-            <button (click)="sidenav.toggle()" mat-mini-fab color="primary" aria-label="Menu toggle">
-              <mat-icon>compare_arrows</mat-icon>
-            </button>&nbsp;
-            <button mat-button color="primary" routerLink="/">Main</button>
-            <button mat-button color="primary" routerLink="/entry-list">Entries</button>
-          </mat-toolbar-row>
-        </mat-toolbar>
-        <mat-divider></mat-divider>
-        
+            <mat-toolbar-row>
+              <button (click)="sidenav.toggle()" mat-mini-fab color="primary" aria-label="Menu toggle">
+                <mat-icon>compare_arrows</mat-icon>
+              </button>&nbsp;
+              <button mat-button color="primary" routerLink="/">Main</button>
+              <button mat-button color="primary" routerLink="/entry-list">Entries</button>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          <mat-divider></mat-divider>
+
+        </div>
+
+        <router-outlet></router-outlet>
+
+
+
       </div>
 
-      <router-outlet></router-outlet>
+      <div class="main-title">
+        <mat-divider></mat-divider>
+        <footer class="bottom-title"></footer>
+      </div>
 
-    </div>
+    </mat-sidenav-content>
 
-  </mat-sidenav-content>
-</mat-sidenav-container>
+   
+
+
+  </mat-sidenav-container>
+
+
+
+
