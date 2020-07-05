@@ -7,9 +7,9 @@ export class EndpointService {
 
   BaseUrl: string = 'https://localhost:44341';
   CryptoEndpoint: string = "/crypto"
-  EntryList: string = '/api/entryList';
-  AddEntry: string = '/api/addEntry';
-  AddOrUpdateEntry: string = '/api/addOrUpdateEntry';
+  EntryList: string = '/api/EntryList';
+  AddEntry: string = '/api/AddEntry';
+  AddOrUpdateEntry: string = '/api/AddOrUpdateEntry';
   UpdateEntry: string = '/api/UpdateEntry';
   DeleteEntry: string = '/api/deleteEntry';
 }

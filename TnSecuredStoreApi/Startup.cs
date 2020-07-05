@@ -6,6 +6,7 @@ using AutoMapper;
 using DbApp.Db;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,7 @@ namespace TnSecuredStoreApi
 
             ConfigureMapper(services);
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<DbContext, SecuredEntryContext>();
             services.AddScoped<EntryValidatorFactory>();
             services.AddScoped<EntryService>();

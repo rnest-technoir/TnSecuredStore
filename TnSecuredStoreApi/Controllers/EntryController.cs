@@ -7,34 +7,47 @@ using DbApp.Db;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using TnSecuredStoreApi.Db.Services;
 using TnSecuredStoreApi.Lib;
 using TnSecuredStoreApi.Models;
 
 namespace TnSecuredStoreApi.Controllers
 {
-    [ApiController]
-    [EnableCors("SecuredEntryPolicy")]
-    public class EntryController : ControllerBase
+    
+    public class EntryController : MainController
     {
         private readonly EntryService _entryService;
         private readonly EntryValidatorFactory _validatorFactory;
         private readonly IMapper _mapper;
-        public EntryController(EntryService entryService, EntryValidatorFactory validatorFactory, IMapper mapper)
+
+        public EntryController(EntryService entryService, EntryValidatorFactory validatorFactory, IMapper mapper, IHttpContextAccessor accessor): base(accessor)
         {
             _entryService = entryService;
             _validatorFactory = validatorFactory;
             _mapper = mapper;
         }
 
-        [Route("api/entryList")]
+        [Route("api/EntryList")]
         [HttpGet]
-        public async Task<IList<EntryModel>> GetEntryListAsync()
+        public async Task<IActionResult> GetEntryListAsync()
         {
-            return _mapper.Map<IList<Entry>, IList<EntryModel>>((await _entryService.GetAllAsync()).OrderByDescending(e => e.CreatedOn).ToList());
+            var list = (await _entryService.GetAllAsync()).OrderByDescending(e => e.CreatedOn).ToList();
+            return Ok(_mapper.Map<IList<Entry>, IList<EntryModel>>(list));
         }
 
-        [Route("api/addEntry")]
+        [Route("api/GetEntryById/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetEntryByIdAsync(int id)
+        {
+            var entry = _mapper.Map<Entry, EntryModel>(await _entryService.GetByIdAsync(id));
+            if(null == entry)
+                return StatusCode(StatusCodes.Status404NotFound);
+
+            return Ok(_mapper.Map<Entry, EntryModel>(await _entryService.GetByIdAsync(id)));
+        }
+
+        [Route("api/AddEntry")]
         [HttpPost]
         public async Task<IActionResult> AddEntryAsync([FromBody]EntryModel model)
         {
@@ -45,10 +58,11 @@ namespace TnSecuredStoreApi.Controllers
 
             var entry = _mapper.Map<EntryModel, Entry>(model);
             model = _mapper.Map<Entry, EntryModel>(await _entryService.AddAsync(entry));
-            return Ok(model);
+            var url = GetCreatedRouteUrl("api/GetEntryById", entry.Id);
+            return Created(url, model);
         }
 
-        [Route("api/addOrUpdateEntry")]
+        [Route("api/AddOrUpdateEntry")]
         [HttpPut]
         public async Task<IActionResult> AddOrUpdateEntryAsync([FromBody]EntryModel model)
         {
@@ -60,7 +74,8 @@ namespace TnSecuredStoreApi.Controllers
                 var added = await _entryService.AddAsync(entryToModel);
                 if(null == added)
                     return StatusCode(StatusCodes.Status500InternalServerError, TXT.Response.ResourceNotFound500);
-                return Ok(added);
+                var url = Url.Action(nameof(GetEntryByIdAsync), nameof(EntryController), new { id = model.Id }, Request.Scheme);
+                return Created(url, model);
             }
 
             int result = await _entryService.UpdateAsync(entryToModel);
@@ -95,7 +110,7 @@ namespace TnSecuredStoreApi.Controllers
         }
 
 
-        [Route("api/deleteEntry")]
+        [Route("api/DeleteEntry")]
         [HttpPost]
         public async Task<IActionResult> DeleteEntryAsync([FromBody]EntryModel model)
         {
